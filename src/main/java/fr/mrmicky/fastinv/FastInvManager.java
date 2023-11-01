@@ -29,6 +29,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.Plugin;
@@ -81,6 +82,23 @@ public final class FastInvManager {
 
         public InventoryListener(Plugin plugin) {
             this.plugin = plugin;
+        }
+
+        @EventHandler
+        public void onInventoryDrag(InventoryDragEvent event) {
+            if(event.getInventory().getHolder() instanceof FastInv) {
+                FastInv inv = (FastInv) event.getInventory().getHolder();
+
+                boolean wasCancelled = event.isCancelled();
+                event.setCancelled(true);
+
+                inv.handleDrag(event);
+
+                // This prevents un-canceling the event if another plugin canceled it before
+                if (!wasCancelled && !event.isCancelled()) {
+                    event.setCancelled(false);
+                }
+            }
         }
 
         @EventHandler

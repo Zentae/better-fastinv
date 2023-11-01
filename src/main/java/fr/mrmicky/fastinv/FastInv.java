@@ -25,19 +25,12 @@ package fr.mrmicky.fastinv;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -54,6 +47,7 @@ public class FastInv implements InventoryHolder {
 
     private final Map<Integer, Consumer<InventoryClickEvent>> itemHandlers = new HashMap<>();
     private final List<Consumer<InventoryOpenEvent>> openHandlers = new ArrayList<>();
+    private final List<Consumer<InventoryDragEvent>> dragHandlers = new ArrayList<>();
     private final List<Consumer<InventoryCloseEvent>> closeHandlers = new ArrayList<>();
     private final List<Consumer<InventoryClickEvent>> clickHandlers = new ArrayList<>();
 
@@ -117,6 +111,9 @@ public class FastInv implements InventoryHolder {
     }
 
     protected void onClose(InventoryCloseEvent event) {
+    }
+
+    protected void onDrag(InventoryDragEvent event) {
     }
 
     /**
@@ -314,6 +311,11 @@ public class FastInv implements InventoryHolder {
     @Override
     public Inventory getInventory() {
         return this.inventory;
+    }
+
+    void handleDrag(InventoryDragEvent e) {
+        onDrag(e);
+        this.dragHandlers.forEach(c -> c.accept(e));
     }
 
     void handleOpen(InventoryOpenEvent e) {
