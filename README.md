@@ -55,7 +55,7 @@ Lightweight and easy-to-use inventory API for Bukkit plugins.
     <dependency>
         <groupId>fr.mrmicky</groupId>
         <artifactId>FastInv</artifactId>
-        <version>3.0.4</version>
+        <version>3.0.5</version>
     </dependency>
 </dependencies>
 ```
@@ -112,6 +112,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -135,6 +136,11 @@ public class ExampleInventory extends FastInv {
 
         // Prevent from closing when preventClose is to true
         setCloseFilter(p -> this.preventClose);
+    }
+
+    @Override
+    public void onDrag(InventoryDragEvent event) {
+        event.getView().getPlayer().sendMessage(ChatColor.GOLD + "You dragged items inside the inventory");
     }
 
     @Override
