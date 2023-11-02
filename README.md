@@ -54,7 +54,7 @@ Lightweight and easy-to-use inventory API for Bukkit plugins.
     <dependency>
         <groupId>fr.mrmicky</groupId>
         <artifactId>FastInv</artifactId>
-        <version>3.0.5</version>
+        <version>3.1.4</version>
     </dependency>
 </dependencies>
 ```
@@ -70,7 +70,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'fr.mrmicky:FastInv:3.0.4'
+    implementation 'fr.mrmicky:FastInv:3.1.4'
 }
 
 shadowJar {
