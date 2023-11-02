@@ -6,11 +6,22 @@
 
     <groupId>fr.mrmicky</groupId>
     <artifactId>fastinv</artifactId>
-    <version>3.1.4</version>
+    <version>3.2.4</version>
 
     <name>FastInv</name>
     <description>Lightweight and easy-to-use inventory API for Bukkit plugins.</description>
     <url>https://github.com/MrMicky-FR/FastInv</url>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>erarealms-snapshots</id>
+            <url>https://nexus.erarealms.fr/repository/maven-snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>erarealms-releases</id>
+            <url>https://nexus.erarealms.fr/repository/maven-releases/</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
