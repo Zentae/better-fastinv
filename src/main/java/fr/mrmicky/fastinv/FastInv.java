@@ -272,6 +272,15 @@ public class FastInv implements InventoryHolder {
     }
 
     /**
+     * Add a handler to handle inventory drag.
+     *
+     * @param dragHandler The handler to add.
+     */
+    public void addDragHandler(Consumer<InventoryDragEvent> dragHandler) {
+        this.dragHandlers.add(dragHandler);
+    }
+
+    /**
      * Open the inventory to a player.
      *
      * @param player The player to open the menu.

@@ -94,7 +94,7 @@ public final class FastInvManager {
 
                 inv.handleDrag(event);
 
-                // This prevents un-canceling the event if another plugin canceled it before
+                // This prevents uncanceling the event if another plugin canceled it before
                 if (!wasCancelled && !event.isCancelled()) {
                     event.setCancelled(false);
                 }
@@ -103,7 +103,7 @@ public final class FastInvManager {
 
         @EventHandler
         public void onInventoryClick(InventoryClickEvent e) {
-            if (e.getInventory().getHolder() instanceof FastInv && e.getClickedInventory() != null) {
+            if (e.getInventory().getHolder() instanceof FastInv) {
                 FastInv inv = (FastInv) e.getInventory().getHolder();
 
                 boolean wasCancelled = e.isCancelled();
