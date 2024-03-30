@@ -26,6 +26,7 @@ package fr.mrmicky.fastinv;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -45,6 +46,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class FastInvManager {
 
     private static final AtomicBoolean REGISTERED = new AtomicBoolean(false);
+    private static Listener INVENTORY_LISTENER;
 
     private FastInvManager() {
         throw new UnsupportedOperationException();
@@ -63,8 +65,10 @@ public final class FastInvManager {
         if (REGISTERED.getAndSet(true)) {
             throw new IllegalStateException("FastInv is already registered");
         }
-
-        Bukkit.getPluginManager().registerEvents(new InventoryListener(plugin), plugin);
+        // set the listener.
+        INVENTORY_LISTENER = new InventoryListener(plugin);
+        // register the events.
+        Bukkit.getPluginManager().registerEvents(INVENTORY_LISTENER, plugin);
     }
 
     /**
@@ -74,6 +78,16 @@ public final class FastInvManager {
         Bukkit.getOnlinePlayers().stream()
                 .filter(p -> p.getOpenInventory().getTopInventory().getHolder() instanceof FastInv)
                 .forEach(Player::closeInventory);
+    }
+
+    public static void unregister() {
+        if(!REGISTERED.getAndSet(false)) {
+            throw new IllegalStateException("FastInv is already unregistered");
+        }
+        // close all inventories.
+        closeAll();
+        // unregister handlers.
+        HandlerList.unregisterAll(INVENTORY_LISTENER);
     }
 
     public static final class InventoryListener implements Listener {
